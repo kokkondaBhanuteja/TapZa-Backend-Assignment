@@ -10,7 +10,7 @@ interface SoldMedicine{
     purchaseCost:number,
 }
 interface PurchaseItem{
-    medicineName: number,
+    medicineName: string,
     customerNeed: number,
 }
 interface RequestBody{
