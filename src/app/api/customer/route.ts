@@ -1,0 +1,30 @@
+import { NextResponse } from "next/server";
+
+const GET_MEDICINES_API = "http://localhost:3000/api/pharmacy";
+
+export async function GET() {
+    try{
+        const options = {
+            method:"GET",
+            headers: {"Content-Type": "application/json"},
+        }
+        const response = await fetch(GET_MEDICINES_API, options);
+        if(!response.ok){
+            return NextResponse.json(
+                {error:"Sorry For the Inconcvience, The Stock is Empty "},
+                {status: 404}
+            )
+        }
+        const medicines = await response.json();
+        return NextResponse.json(
+            {medicines},
+            {status:200}
+        )
+    }catch(err){
+        console.error("Error While Fetching Medicine ", err);
+        return NextResponse.json(
+          { error: "Error While Fetching the Mediciness" },
+          { status: 500 }
+        );
+    }
+}

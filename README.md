@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pharmacy Inventory Management API
 
-## Getting Started
+A **Next.js-based API** for managing pharmacy and customer inventory, purchases, and sales.
 
-First, run the development server:
+---
+
+## 🚀 Getting Started
+
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+
+### ✅ Prerequisites
+
+* Node.js
+* npm (or yarn)
+
+### 📥 Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/kokkondaBhanuteja/TapZa-Backend-Assignment.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd backend-assignment
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Set up your environment variables. Create a `.env.local` file in the root of the project and add your MongoDB connection string:
+
+   ```env
+   MONGODB_URI="your_mongodb_connection_string"
+   ```
+
+### ▶️ Running the Development Server
+
+Start the server with:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at: [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📌 API Endpoints
 
-## Learn More
+### Inventory
 
-To learn more about Next.js, take a look at the following resources:
+* **GET** `/api/inventory` → Fetches all items from the inventory.
+* **POST** `/api/inventory/add` → Adds a new medicine to the inventory.
+* **GET** `/api/inventory/[id]` → Retrieves a specific medicine by its ID.
+* **PUT** `/api/inventory/[id]` → Updates a specific medicine by its ID.
+* **DELETE** `/api/inventory/[id]` → Deletes a specific medicine by its ID.
+* **POST** `/api/inventory/purchase` → Simulates a purchase from the inventory (used by the pharmacy).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Pharmacy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* **GET** `/api/pharmacy` → Fetches all medicines available in the pharmacy.
+* **POST** `/api/pharmacy/buy` → Allows the pharmacy to buy medicines from the main inventory.
+* **POST** `/api/pharmacy/sell` → Allows the pharmacy to sell medicines to a customer.
+* **GET** `/api/pharmacy/[id]` → Retrieves a specific medicine in the pharmacy by ID.
 
-## Deploy on Vercel
+### Customer
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* **GET** `/api/customer` → Fetches available medicines for a customer to view.
+* **POST** `/api/customer/buy` → Allows a customer to purchase medicines.
+* **POST** `/api/customer-log` → Logs a customer's purchase.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🛠 Tech Stack
+
+* **Next.js** (API Routes)
+* **MongoDB** (Database) LOCAL
+* **Node.js** (Runtime)
+
+---
