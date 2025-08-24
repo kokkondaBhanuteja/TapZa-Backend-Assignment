@@ -5,50 +5,64 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
+        <a
+          href="https://tapza.in"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.logoLink}
+        >
+          <Image
+            className={styles.logo}
+            src="/TapZaLogo.png"
+            alt="TapZa logo"
+            width={50}
+            height={50}
+            priority
+          />
+          <span className={styles.companyName}>TapZa</span>
+        </a>
+
         <ol>
           <li>
-            Get started by editing <code>src/app/page.tsx</code>.
+            Welcome to the <b>TapZa Backend Assignment</b> project.
           </li>
-          <li>Save and see your changes instantly.</li>
+          <li>
+            Explore the codebase and learn how the backend is structured.
+          </li>
+          <li>
+            Visit the GitHub repository for source code and documentation.
+          </li>
         </ol>
 
         <div className={styles.ctas}>
           <a
             className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+            href="https://github.com/kokkondaBhanuteja/TapZa-Backend-Assignment"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Image
               className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
+              src="/github.svg"
+              alt="GitHub logo"
               width={20}
               height={20}
             />
-            Deploy now
+            View Repository
           </a>
           <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+            href="https://github.com/kokkondaBhanuteja/TapZa-Backend-Assignment#readme"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.secondary}
           >
-            Read our docs
+            Read Documentation
           </a>
         </div>
       </main>
       <footer className={styles.footer}>
         <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+          href="https://github.com/kokkondaBhanuteja/TapZa-Backend-Assignment/issues"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -59,10 +73,10 @@ export default function Home() {
             width={16}
             height={16}
           />
-          Learn
+          Issues
         </a>
         <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+          href="https://github.com/kokkondaBhanuteja/TapZa-Backend-Assignment/pulls"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -73,10 +87,10 @@ export default function Home() {
             width={16}
             height={16}
           />
-          Examples
+          Pull Requests
         </a>
         <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+          href="https://github.com/kokkondaBhanuteja/TapZa-Backend-Assignment"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -87,7 +101,7 @@ export default function Home() {
             width={16}
             height={16}
           />
-          Go to nextjs.org →
+          Go to GitHub →
         </a>
       </footer>
     </div>

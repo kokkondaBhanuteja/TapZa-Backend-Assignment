@@ -55,7 +55,12 @@
   border-radius: 4px;
   font-weight: 600;
 }
-
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 12px; 
+  text-decoration: none;
+}
 .ctas {
   display: flex;
   gap: 16px;
@@ -106,8 +111,27 @@ a.secondary {
 .footer img {
   flex-shrink: 0;
 }
+.companyName {
+  font-size: 35px;
+  font-weight: 600;
+  margin-left: 10px;
+  color: var(--foreground, #000); 
+  letter-spacing: -0.5px;
+  transition: color 0.2s ease-in-out;
+}
 
-/* Enable hover only on non-touch devices */
+@media (prefers-color-scheme: dark) {
+  .companyName {
+    color: var(--foreground, #fff);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .logoLink:hover .companyName {
+    color: #0070f3; 
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   a.primary:hover {
     background: var(--button-primary-hover);
@@ -157,11 +181,5 @@ a.secondary {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
   }
 }

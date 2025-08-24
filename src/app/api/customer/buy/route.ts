@@ -6,7 +6,7 @@ const PHARMACY_API = "http://localhost:3000/api/pharmacy";
 const CUSTOMER_LOG_API =  "http://localhost:3000/api/customer-log" ;
 
 interface PurchaseItem{
-  medicineName: number,
+  medicineName: string,
   customerNeed: number,
 }
 
