@@ -1,7 +1,13 @@
 import { NextResponse } from "next/server";
 
 const GET_MEDICINES_API = "http://localhost:3000/api/pharmacy";
-
+interface Medicine{
+    _id: string;
+    medicineId: number;
+    medicineName: string;
+    medicinePrice: number;
+    medicineStock: number;
+  }
 export async function GET() {
     try{
         const options = {
@@ -12,12 +18,24 @@ export async function GET() {
         if(!response.ok){
             return NextResponse.json(
                 {error:"Sorry For the Inconcvience, The Stock is Empty "},
-                {status: 404}
+                {status: 503} 
             )
         }
-        const medicines = await response.json();
+        const data:{pharmacyMedicines: Medicine[]} = await response.json();
+        console.log(data);
+        if(!data || !Array.isArray(data.pharmacyMedicines)){
+            return NextResponse.json(
+                {error:"Invalid Structure Received from the API"},
+                {status: 500} 
+            )
+        }
+        const customerView = data.pharmacyMedicines.map((medicine:Medicine) =>({
+            name: medicine.medicineName,
+            price: medicine.medicinePrice
+        }));
+
         return NextResponse.json(
-            {medicines},
+            {customerView},
             {status:200}
         )
     }catch(err){
