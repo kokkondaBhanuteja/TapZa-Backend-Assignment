@@ -2,8 +2,8 @@ import { connectDb } from "@/lib/connectDb";
 import { NextRequest, NextResponse } from "next/server";
 import Pharmacy from "@/models/pharmacyModel";
 
-const INVENTORY_API = process.env.MEDICINE_PURCHASE_URL || "http://localhost:3000/api/inventory";
-const LOG_PURCHASE_API = process.env.PHARMACY_PURCHASELOG_URL || "http://localhost:3000/api/log-purchase" ;
+import { purchaseFromInventory } from "@/lib/inventoryService";
+import { logPharmacyPurchase } from "@/lib/loggingService";
 
 interface PurchaseItem{
   medicineId: number,
@@ -25,24 +25,18 @@ export async function POST(request:NextRequest) {
       );
     }
 
-    const purchaseOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ purchaseList }),
-    };
+    
 
-    const inventoryPurchaseResponse = await fetch(`${INVENTORY_API}/purchase`,purchaseOptions);
+    const inventoryPurchaseResponse = await purchaseFromInventory(purchaseList);
 
-    const result = await inventoryPurchaseResponse.json();
-
-    if (!inventoryPurchaseResponse.ok) {
+    if (!inventoryPurchaseResponse.success || ! inventoryPurchaseResponse.medicines) {
       return NextResponse.json(
-        { error: result.error },
+        { error: inventoryPurchaseResponse.error },
         { status: inventoryPurchaseResponse.status }
       );
     }
-    if(result.success){
-      for(const medicine of result.medicines){
+    
+      for(const medicine of inventoryPurchaseResponse.medicines){
         const medicineExist = await Pharmacy.findOne({medicineId: medicine.medicineId});
         
         if(medicineExist){
@@ -59,23 +53,19 @@ export async function POST(request:NextRequest) {
         }
       }
 
-      const logOptions = {
-        method: "POST",
-        headers : {"Content-Type": "application/json"},
-        body:JSON.stringify({
-          medicines: result.medicines,
-          totalBillAmount: result.totalBillAmount,
-        })
-      }
-      const logResponse = await fetch(LOG_PURCHASE_API, logOptions);
-      
-      const logResult = await logResponse.json();
-      
+      const logResponse = await logPharmacyPurchase(inventoryPurchaseResponse.medicines, inventoryPurchaseResponse.totalBillAmount || 0)
+
+      if (!logResponse.success) {
+        return NextResponse.json({
+            message: "Medicines were successfully purchased, but failed to record the log.",
+            purchaseDetails: logResponse,
+            logError: logResponse.error
+        }, { status: 207 }); 
+    }
       return NextResponse.json(
-        {message:`Medicines are Successfully Purchased and Recorded : ${logResult.medicines}`},
+        {message:`Medicines are Successfully Purchased and Recorded : ${logResponse.log}`},
         {status: logResponse.status}
       );
-    }
   } catch (err) {
     console.error("Error While Buying the Medicine ", err);
     return NextResponse.json(
