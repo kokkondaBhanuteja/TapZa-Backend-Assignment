@@ -5,10 +5,10 @@ import { NextRequest, NextResponse } from "next/server";
 interface Params{
   id: string,
 }
-export async function GET(_:NextRequest, { params }: {params:Params}) {
+export async function GET(request :NextRequest, { params }: { params:Promise<Params> }) {
   try {
     await connectDb();
-    const { id } = await params;
+    const { id } =  await params;
 
     const InventoryItem = await Inventory.findOne({ medicineId: Number(id) });
 
@@ -31,7 +31,7 @@ export async function GET(_:NextRequest, { params }: {params:Params}) {
   }
 }
 
-export async function PUT(request:NextRequest, { params }:{params:Params}) {
+export async function PUT(request:NextRequest, { params }:{params:Promise<Params>}) {
   try {
     await connectDb();
     
@@ -77,7 +77,7 @@ export async function PUT(request:NextRequest, { params }:{params:Params}) {
   }
 }
 
-export async function DELETE(request:NextRequest, { params }:{params:Params}) {
+export async function DELETE(request:NextRequest, { params }:{params:Promise<Params>}) {
   try {
     await connectDb();
     const { id } = await params;
