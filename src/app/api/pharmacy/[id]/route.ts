@@ -2,17 +2,13 @@ import { connectDb } from "@/lib/connectDb";
 import Pharmacy from "@/models/pharmacyModel";
 import { NextResponse, NextRequest } from "next/server";
 
-interface Params {
-  id: string;
+interface Params{
+  id: string,
 }
-
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Params }
-) {
+export async function GET(_:NextRequest,{ params }: { params: Promise<Params>} ) {
   try {
     await connectDb();
-    const { id } = params;
+    const { id } = await  params;
 
     const pharmacyItem = await Pharmacy.findOne({ medicineId: Number(id) });
 
@@ -36,11 +32,12 @@ export async function GET(
   }
 }
 
-export async function PUT(request: NextRequest, { params }:{params:Params}) {
+export async function PUT(request: NextRequest, 
+  { params }: { params: Promise<Params> }) {
   try {
     await connectDb();
     
-    const { id } = await params;
+    const { id } =   await params;
     const medicineId:number = Number(id);
     if(!Number.isInteger(medicineId)){
       return NextResponse.json({
@@ -85,10 +82,10 @@ export async function PUT(request: NextRequest, { params }:{params:Params}) {
   }
 }
 
-export async function DELETE(_:NextRequest, { params }:{params:Params}) {
+export async function DELETE(_:NextRequest, { params }: { params: Promise<Params>}) {
   try {
     await connectDb();
-    const { id } = await params;
+    const { id } =  await params;
     const medicineId = Number(id);
 
     if(!medicineId){
